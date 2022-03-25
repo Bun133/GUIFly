@@ -1,0 +1,5 @@
+name: GUIFly_sample
+version: '${project.version}'
+main: com.github.bun133.guifly_sample.GUIFly_sample
+api-version: 1.16
+authors: [ Bun133 ]

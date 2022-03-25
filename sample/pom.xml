@@ -4,17 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.bun133</groupId>
-    <artifactId>guifly</artifactId>
-    <version>0.0.1</version>
+    <groupId>com.github.Bun133</groupId>
+    <artifactId>GUIFly_sample</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>GuiFly</name>
+    <name>GUIFly_sample</name>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.6.20-RC2</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
     </properties>
 
     <build>
@@ -31,12 +31,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>kotlin</pattern>
-                                    <shadedPattern>kotlin-shaded</shadedPattern>
-                                </relocation>
-                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -108,6 +102,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -127,6 +125,16 @@
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.kotx</groupId>
+            <artifactId>flylib-reloaded</artifactId>
+            <version>0.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Bun133</groupId>
+            <artifactId>GUIFly</artifactId>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 </project>
