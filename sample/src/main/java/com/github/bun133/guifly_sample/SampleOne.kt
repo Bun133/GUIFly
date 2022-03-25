@@ -1,6 +1,6 @@
 package com.github.bun133.guifly_sample
 
-import com.github.bun133.guifly.gui.type.InventoryType
+import com.github.bun133.guifly.Guifly
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player

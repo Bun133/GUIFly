@@ -31,12 +31,14 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>kotlin</pattern>
-                                    <shadedPattern>kotlin-shaded</shadedPattern>
-                                </relocation>
-                            </relocations>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>
+                                        <groupId>org.jetbrains</groupId>
+                                        <artifactId>kotlin-stdlib</artifactId>
+                                    </exclude>
+                                </excludes>
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
