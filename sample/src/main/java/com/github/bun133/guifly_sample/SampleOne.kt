@@ -1,6 +1,12 @@
 package com.github.bun133.guifly_sample
 
-import com.github.bun133.guifly.Guifly
+import com.github.bun133.guifly.gui
+import com.github.bun133.guifly.gui.GUI
+import com.github.bun133.guifly.title
+import com.github.bun133.guifly.type
+import com.github.bun133.guifly.gui.type.InventoryType
+import com.github.bun133.guifly.item
+import com.github.bun133.guifly.range
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -8,8 +14,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 class SampleOne {
-    fun main() {
-        val plugin = dummyPlugin()
+    fun main(plugin:JavaPlugin) : GUI {
         val gui = gui(plugin) {
             title(Component.text("SampleOne"))
             type(InventoryType.CHEST_3)
@@ -18,6 +23,8 @@ class SampleOne {
                 click {
                     (it.whoClicked as Player).sendMessage("click!")
                 }
+
+                stack(ItemStack(Material.STONE))
 
                 markAsUnMovable()
             }
@@ -36,8 +43,6 @@ class SampleOne {
         }
 
 //        gui.open(Player)
+        return gui
     }
-}
-
-class dummyPlugin : JavaPlugin() {
 }
