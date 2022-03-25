@@ -6,7 +6,7 @@
 
     <groupId>com.github.bun133</groupId>
     <artifactId>guifly</artifactId>
-    <version>1.0</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>GuiFly</name>
