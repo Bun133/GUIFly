@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 class SampleOne {
-    fun main(plugin:JavaPlugin) : GUI {
+    fun main(plugin: JavaPlugin): GUI {
         val gui = gui(plugin) {
             title(Component.text("SampleOne"))
             type(InventoryType.CHEST_3)
@@ -35,9 +35,7 @@ class SampleOne {
                         (it.whoClicked as Player).sendMessage("pick! in Range Item")
                     }
 
-                    stack {
-                        ItemStack(Material.STONE, 1)
-                    }
+                    stack(ItemStack(Material.STONE))
                 }
             }
         }

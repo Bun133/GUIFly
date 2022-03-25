@@ -30,8 +30,8 @@ fun GUIBuilder.range(fromX: Int, fromY: Int, toX: Int, toY: Int, f: RangeBuilder
     this.addItem(*(builder.build().toTypedArray()))
 }
 
-fun GUIBuilder.range(x: Pair<Int, Int>, y: Pair<Int, Int>, f: RangeBuilder.() -> Unit) =
-    this.range(x.first, y.first, x.second, y.second, f)
+fun GUIBuilder.range(from: Pair<Int, Int>, to: Pair<Int, Int>, f: RangeBuilder.() -> Unit) =
+    this.range(from.first, to.first, from.second, to.second, f)
 
 fun GUIBuilder.range(x: IntRange, y: IntRange, f: RangeBuilder.() -> Unit) =
     this.range(x.first, y.first, x.last, y.last, f)
