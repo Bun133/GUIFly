@@ -31,7 +31,7 @@ fun GUIBuilder.range(fromX: Int, fromY: Int, toX: Int, toY: Int, f: RangeBuilder
 }
 
 fun GUIBuilder.range(from: Pair<Int, Int>, to: Pair<Int, Int>, f: RangeBuilder.() -> Unit) =
-    this.range(from.first, to.first, from.second, to.second, f)
+    this.range(from.first, from.second, to.first, to.second, f)
 
 fun GUIBuilder.range(x: IntRange, y: IntRange, f: RangeBuilder.() -> Unit) =
     this.range(x.first, y.first, x.last, y.last, f)
