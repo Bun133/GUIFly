@@ -13,4 +13,6 @@ GUIFlyはMinecraftのGUIを操作するためのライブラリです。<br/>
 
 # サンプルコード
 
+サンプルコードは[こちら](https://github.com/Bun133/GUIFly/tree/main/src/main/java/com/github/bun133/guifly/sample)
+
 # Getting Started
