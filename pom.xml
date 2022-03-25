@@ -34,8 +34,7 @@
                             <artifactSet>
                                 <excludes>
                                     <exclude>
-                                        <groupId>org.jetbrains</groupId>
-                                        <artifactId>kotlin-stdlib</artifactId>
+                                        org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin.version}
                                     </exclude>
                                 </excludes>
                             </artifactSet>
