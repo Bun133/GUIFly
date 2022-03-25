@@ -1,6 +1,7 @@
 package com.github.bun133.guifly.gui.item
 
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryInteractEvent
 import org.bukkit.inventory.ItemStack
 
 class ItemBuilder(
@@ -45,12 +46,17 @@ class ItemBuilder(
     }
 
     private val move = mutableListOf<(InventoryClickEvent) -> Unit>()
+
     fun move(f: (InventoryClickEvent) -> Unit) {
         move.add(f)
     }
 
-    private val change = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun change(f: (InventoryClickEvent) -> Unit) {
+    private val change = mutableListOf<(InventoryInteractEvent) -> Unit>()
+
+    /**
+     * @note イベントはInventoryClickedEventとInventoryDragEventのどちらかが呼ばれる
+     */
+    fun change(f: (InventoryInteractEvent) -> Unit) {
         change.add(f)
     }
 

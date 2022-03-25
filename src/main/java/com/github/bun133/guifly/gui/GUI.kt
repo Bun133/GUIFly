@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCreativeEvent
+import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -115,5 +117,15 @@ class GUI(
         if (entry.isMarkUnMovable) {
             e.isCancelled = true
         }
+    }
+
+    @EventHandler
+    private fun onDrag(e: InventoryDragEvent) {
+        val entry = items.values.filter { e.rawSlots.contains(type.indexConverter.get(it.x to it.y)) }
+        if (entry.isEmpty()) return
+
+        val change = entry.map { it.change }.flatten()
+
+        change.forEach { it(e) }
     }
 }

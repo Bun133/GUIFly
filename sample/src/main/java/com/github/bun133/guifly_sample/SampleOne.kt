@@ -16,26 +16,55 @@ import org.bukkit.plugin.java.JavaPlugin
 class SampleOne {
     fun main(plugin: JavaPlugin): GUI {
         val gui = gui(plugin) {
+            // GUIのタイトルを指定
             title(Component.text("SampleOne"))
+            // GUIのタイプを指定(チェスト3段)
             type(InventoryType.CHEST_3)
 
+            // (1,1)(左上)のアイテムを指定
             item(1 to 1) {
+                // クリック時の処理
                 click {
                     (it.whoClicked as Player).sendMessage("click!")
                 }
 
+                // アイテムを指定
                 stack(ItemStack(Material.STONE))
 
+                // このアイテムに関してのイベントを全部キャンセルする(動かなくなる)
                 markAsUnMovable()
             }
 
+            // (2,2) ~ (4,4)のアイテムを指定(3段までしかないので、4段目の指定は無視されます)
             range(2 to 2, 4 to 4) {
+                // すべてのアイテムを指定
                 all {
+                    // アイテムを取ったときの処理
                     pick {
                         (it.whoClicked as Player).sendMessage("pick! in Range Item")
                     }
 
+                    // スロットの中身が変わったときの処理
+                    change {
+                        (it.whoClicked as Player).sendMessage("change! in Range Item")
+                    }
+
+                    // アイテムの指定
                     stack(ItemStack(Material.STONE))
+                }
+
+                // (2,2)を個別に指定する
+                set(2, 2) {
+                    // クリック時の処理
+                    click {
+                        (it.whoClicked as Player).sendMessage("Hi! I'm overwritten item!")
+                    }
+
+                    // アイテムの指定
+                    stack(ItemStack(Material.STONE))
+
+                    // このアイテムに関してのイベントを全部キャンセルする(動かなくなる)
+                    markAsUnMovable()
                 }
             }
         }

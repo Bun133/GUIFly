@@ -13,6 +13,24 @@ GUIFlyはMinecraftのGUIを操作するためのライブラリです。<br/>
 
 # サンプルコード
 
-サンプルコードは[こちら](https://github.com/Bun133/GUIFly/tree/main/src/main/java/com/github/bun133/guifly/sample)
+サンプルコードは[こちら](https://github.com/Bun133/GUIFly/tree/main/sample/src/main/java/com/github/bun133/guifly_sample)
 
 # Getting Started
+
+## Maven
+
+[![](https://jitpack.io/v/Bun133/GUIFly.svg)](https://jitpack.io/#Bun133/GUIFly)
+
+```xml
+
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
+
+<dependency>
+<groupId>com.github.Bun133</groupId>
+<artifactId>GUIFly</artifactId>
+<version>[VERSION]</version>
+</dependency>
+```
