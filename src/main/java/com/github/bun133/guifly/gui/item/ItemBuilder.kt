@@ -36,19 +36,22 @@ class ItemBuilder(
     }
 
     private val click = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun click(f: (InventoryClickEvent) -> Unit) {
+    fun click(f: (InventoryClickEvent) -> Unit) : ItemBuilder{
         click.add(f)
+        return this
     }
 
     private val pick = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun pick(f: (InventoryClickEvent) -> Unit) {
+    fun pick(f: (InventoryClickEvent) -> Unit): ItemBuilder {
         pick.add(f)
+        return this
     }
 
     private val move = mutableListOf<(InventoryClickEvent) -> Unit>()
 
-    fun move(f: (InventoryClickEvent) -> Unit) {
+    fun move(f: (InventoryClickEvent) -> Unit) : ItemBuilder{
         move.add(f)
+        return this
     }
 
     private val change = mutableListOf<(InventoryInteractEvent) -> Unit>()
@@ -56,8 +59,9 @@ class ItemBuilder(
     /**
      * @note イベントはInventoryClickedEventとInventoryDragEventのどちらかが呼ばれる
      */
-    fun change(f: (InventoryInteractEvent) -> Unit) {
+    fun change(f: (InventoryInteractEvent) -> Unit)  : ItemBuilder{
         change.add(f)
+        return this
     }
 
     private var unmovable = false

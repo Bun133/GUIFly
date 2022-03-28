@@ -38,14 +38,14 @@ class InfiniteGUI(
     private fun initGUI() {
         val upButton = ItemBuilder(9, 1)
             .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("上へ")) } })
-            .also { it.click { onUpClick() } }
+            .click { onUpClick() }
             .build()
 
         infiniteIndex.forceRules[9 to 1] = 9
 
         val downButton = ItemBuilder(9, chestRow)
             .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("下へ")) } })
-            .also { it.click { onDownClick() } }
+            .click { onDownClick() }
             .build()
 
         infiniteIndex.forceRules[9 to chestRow] = 9 * chestRow
