@@ -42,14 +42,14 @@ class InfiniteGUI(
             .click { onUpClick() }
             .build()
 
-        infiniteIndex.forceRules[9 to 1] = 9
+        infiniteIndex.forceRules[9 to 1] = 9 - 1
 
         val downButton = ItemBuilder(9, chestRow)
             .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("下へ")) } })
             .click { onDownClick() }
             .build()
 
-        infiniteIndex.forceRules[9 to chestRow] = 9 * chestRow
+        infiniteIndex.forceRules[9 to chestRow] = 9 * chestRow - 1
 
         this[Unit] = upButton
         this[Unit] = downButton
