@@ -89,7 +89,7 @@ class InfiniteGUI(
     }
 
     fun onDownClick() {
-        infiniteIndex.y = min(maxY(), infiniteIndex.y + 1)
+        infiniteIndex.y = min(maxY() - 1, infiniteIndex.y + 1)
         update()
     }
 
