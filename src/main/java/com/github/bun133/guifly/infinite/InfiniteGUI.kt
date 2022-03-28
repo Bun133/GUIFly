@@ -79,21 +79,17 @@ class InfiniteGUI(
             y in 1..chestRow
         }
 
-        println("update: $toUpdate")
-
         gui.clear()
         set(*toUpdate.values.toTypedArray())
     }
 
     fun onUpClick() {
-        infiniteIndex.y = min(maxY(), infiniteIndex.y + 1)
-        println("y: ${infiniteIndex.y}")
+        infiniteIndex.y = max(0, infiniteIndex.y - 1)
         update()
     }
 
     fun onDownClick() {
-        infiniteIndex.y = max(0, infiniteIndex.y - 1)
-        println("y: ${infiniteIndex.y}")
+        infiniteIndex.y = min(maxY(), infiniteIndex.y + 1)
         update()
     }
 
