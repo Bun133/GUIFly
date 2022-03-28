@@ -40,6 +40,7 @@ class InfiniteGUI(
         val upButton = ItemBuilder(9, 1)
             .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("上へ")) } })
             .click { onUpClick() }
+            .markAsUnMovable()
             .build()
 
         infiniteIndex.forceRules[9 to 1] = 9 - 1
@@ -47,6 +48,7 @@ class InfiniteGUI(
         val downButton = ItemBuilder(9, chestRow)
             .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("下へ")) } })
             .click { onDownClick() }
+            .markAsUnMovable()
             .build()
 
         infiniteIndex.forceRules[9 to chestRow] = 9 * chestRow - 1
@@ -105,7 +107,7 @@ class InfiniteGUIBuilder() : GUIBuilder() {
         } else if (_type == null) {
             throw IllegalStateException("$this type is null,please check code and set type")
         } else {
-            return InfiniteGUI(toChestRow(_type!!), _title!!, _holder, plugin)
+            return InfiniteGUI(toChestRow(_type!!), _title!!, _holder, plugin).also { it.set(*items.toTypedArray()) }
         }
     }
 

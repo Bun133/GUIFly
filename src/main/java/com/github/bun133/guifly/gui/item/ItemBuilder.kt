@@ -69,8 +69,9 @@ class ItemBuilder(
     /**
      * このスタックに関連するイベントをすべて無効化するかどうか
      */
-    fun markAsUnMovable(f: Boolean = true) {
+    fun markAsUnMovable(f: Boolean = true) : ItemBuilder{
         unmovable = f
+        return this
     }
 
 //    private val swap = mutableListOf<(InventoryClickEvent) -> Unit>()
