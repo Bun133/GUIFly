@@ -7,7 +7,7 @@ import org.bukkit.inventory.InventoryHolder
 import org.bukkit.plugin.java.JavaPlugin
 
 open class GUIBuilder {
-    internal open fun build(plugin: JavaPlugin): GUI {
+    open fun build(plugin: JavaPlugin): GUI {
         if (_title == null) {
             throw IllegalStateException("$this title is null,please check code and set title")
         } else if (_type == null) {
