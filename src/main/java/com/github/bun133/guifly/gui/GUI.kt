@@ -42,7 +42,7 @@ open class GUI(
         Bukkit.createInventory(holder, inventoryType, title)
     }
 
-    private val items = mutableMapOf<Pair<Int, Int>, GUIItem>()
+    protected val items = mutableMapOf<Pair<Int, Int>, GUIItem>()
 
     operator fun set(unit: Unit, item: GUIItem) {
         set(item)
@@ -51,7 +51,7 @@ open class GUI(
     /**
      * set item in this GUI
      */
-    fun set(vararg item: GUIItem) {
+    open fun set(vararg item: GUIItem) {
         item.forEach { e ->
             indexConverter.get(e.x to e.y)?.let {
                 gui.setItem(it, e.item)

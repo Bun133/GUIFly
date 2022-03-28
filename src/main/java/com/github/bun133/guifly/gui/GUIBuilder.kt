@@ -7,34 +7,33 @@ import org.bukkit.inventory.InventoryHolder
 import org.bukkit.plugin.java.JavaPlugin
 
 open class GUIBuilder {
-    internal fun build(plugin: JavaPlugin): GUI {
-        if (title == null) {
+    internal open fun build(plugin: JavaPlugin): GUI {
+        if (_title == null) {
             throw IllegalStateException("$this title is null,please check code and set title")
-        } else if (type == null) {
+        } else if (_type == null) {
             throw IllegalStateException("$this type is null,please check code and set type")
         } else {
-            return GUI(type!!, title!!, holder, plugin).also { it.set(*items.toTypedArray()) }
+            return GUI(_type!!, _title!!, _holder, plugin).also { it.set(*items.toTypedArray()) }
         }
     }
 
-    private val items = mutableListOf<GUIItem>()
-
-    internal fun addItem(vararg item: GUIItem) {
+    protected val items = mutableListOf<GUIItem>()
+    fun addItem(vararg item: GUIItem) {
         items.addAll(item)
     }
 
-    private var title: Component? = null
-    internal fun setTitle(title: Component) {
-        this.title = title
+    protected var _title: Component? = null
+    fun setTitle(title: Component) {
+        this._title = title
     }
 
-    private var type: InventoryType? = null
-    internal fun setType(type: InventoryType) {
-        this.type = type
+    protected var _type: InventoryType? = null
+    fun setType(type: InventoryType) {
+        this._type = type
     }
 
-    private var holder: InventoryHolder? = null
-    internal fun setHolder(holder: InventoryHolder) {
-        this.holder = holder
+    protected var _holder: InventoryHolder? = null
+    fun setHolder(holder: InventoryHolder) {
+        this._holder = holder
     }
 }
