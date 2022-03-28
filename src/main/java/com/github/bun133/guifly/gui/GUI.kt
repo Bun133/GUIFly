@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCreativeEvent
 import org.bukkit.event.inventory.InventoryDragEvent
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -32,15 +33,13 @@ open class GUI(
         plugin
     )
 
-    init {
-        plugin.server.pluginManager.registerEvents(this, plugin)
-    }
-
     val gui = if (inventoryType == org.bukkit.event.inventory.InventoryType.CHEST) {
         Bukkit.createInventory(holder, size, title)
     } else {
         Bukkit.createInventory(holder, inventoryType, title)
     }
+
+    val listener = GUIListener(gui, plugin, { onClick(it) }, { onDrag(it) })
 
     protected val items = mutableMapOf<Pair<Int, Int>, GUIItem>()
 
@@ -68,8 +67,8 @@ open class GUI(
     }
 
     /// EVENTS
-    @EventHandler
     private fun onClick(e: InventoryClickEvent) {
+        println("onClick")
         if (e.clickedInventory != gui) return
         val en = items.toList().find { indexConverter.get(it.first) == e.rawSlot } ?: return
         val entry = en.second
@@ -145,13 +144,34 @@ open class GUI(
         }
     }
 
-    @EventHandler
     private fun onDrag(e: InventoryDragEvent) {
+        println("onDrag")
         val entry = items.values.filter { e.rawSlots.contains(indexConverter.get(it.x to it.y)) }
         if (entry.isEmpty()) return
 
         val change = entry.map { it.change }.flatten()
 
         change.forEach { it(e) }
+    }
+}
+
+class GUIListener(
+    val gui: Inventory,
+    plugin: JavaPlugin,
+    val click: (InventoryClickEvent) -> Unit,
+    val drag: (InventoryDragEvent) -> Unit
+) : Listener {
+    init {
+        plugin.server.pluginManager.registerEvents(this, plugin)
+    }
+
+    @EventHandler
+    private fun onDrag(e: InventoryDragEvent) {
+        drag(e)
+    }
+
+    @EventHandler
+    private fun onClick(e: InventoryClickEvent) {
+        click(e)
     }
 }
