@@ -56,7 +56,13 @@ class GUI(
         val entry = items.values.find { type.indexConverter.get(it.x to it.y) == e.rawSlot } ?: return
 
         // List click event
-        val click = entry.click.toList()
+        val click = if (
+            e.action != InventoryAction.COLLECT_TO_CURSOR
+        ) {
+            entry.click.toList()
+        } else {
+            emptyList()
+        }
 
         // List pick event
         val pick = if (
@@ -73,7 +79,8 @@ class GUI(
         val move = if (
             e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY ||
             e.action == InventoryAction.HOTBAR_MOVE_AND_READD ||
-            e.action == InventoryAction.DROP_ALL_SLOT
+            e.action == InventoryAction.DROP_ALL_SLOT ||
+            e.action == InventoryAction.DROP_ONE_SLOT
         ) {
             entry.move.toList()
         } else {
