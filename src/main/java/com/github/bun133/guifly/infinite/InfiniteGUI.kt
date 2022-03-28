@@ -30,6 +30,7 @@ class InfiniteGUI(
         holder,
         plugin
     ) {
+    private val internalMap = mutableMapOf<Pair<Int, Int>, GUIItem>()
 
     init {
         initGUI()
@@ -54,7 +55,6 @@ class InfiniteGUI(
         this[Unit] = downButton
     }
 
-    private val internalMap = mutableMapOf<Pair<Int, Int>, GUIItem>()
 
     override fun set(vararg item: GUIItem) {
         item.forEach {
