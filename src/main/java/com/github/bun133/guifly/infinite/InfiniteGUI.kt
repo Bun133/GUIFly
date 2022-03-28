@@ -105,7 +105,7 @@ class InfiniteGUIBuilder() : GUIBuilder() {
         } else if (_type == null) {
             throw IllegalStateException("$this type is null,please check code and set type")
         } else {
-            return InfiniteGUI(toChestRow(_type!!), _title!!, _holder!!, plugin)
+            return InfiniteGUI(toChestRow(_type!!), _title!!, _holder, plugin)
         }
     }
 
