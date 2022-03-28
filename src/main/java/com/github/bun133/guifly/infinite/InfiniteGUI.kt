@@ -79,6 +79,7 @@ class InfiniteGUI(
             y in 1..chestRow
         }
 
+        items.clear()
         gui.clear()
         set(*toUpdate.values.toTypedArray())
     }
