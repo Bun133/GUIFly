@@ -75,9 +75,11 @@ class InfiniteGUI(
 
     fun update() {
         val toUpdate = internalMap.filter {
-            it.key.second - infiniteIndex.y in 1..chestRow
+            val y = if (infiniteIndex.forceRules.contains(it.key)) it.key.second else it.key.second - infiniteIndex.y
+            y in 1..chestRow
         }
 
+        gui.clear()
         set(*toUpdate.values.toTypedArray())
     }
 

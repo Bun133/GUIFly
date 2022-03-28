@@ -68,7 +68,6 @@ open class GUI(
 
     /// EVENTS
     private fun onClick(e: InventoryClickEvent) {
-        println("onClick")
         if (e.clickedInventory != gui) return
         val en = items.toList().find { indexConverter.get(it.first) == e.rawSlot } ?: return
         val entry = en.second
@@ -145,7 +144,6 @@ open class GUI(
     }
 
     private fun onDrag(e: InventoryDragEvent) {
-        println("onDrag")
         val entry = items.values.filter { e.rawSlots.contains(indexConverter.get(it.x to it.y)) }
         if (entry.isEmpty()) return
 
