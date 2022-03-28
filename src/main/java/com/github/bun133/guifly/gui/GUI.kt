@@ -71,7 +71,8 @@ open class GUI(
     @EventHandler
     private fun onClick(e: InventoryClickEvent) {
         if (e.clickedInventory != gui) return
-        val entry = items.values.find { indexConverter.get(it.x to it.y) == e.rawSlot } ?: return
+        val en = items.toList().find { indexConverter.get(it.first) == e.rawSlot } ?: return
+        val entry = en.second
 
         // List click event
         val click = if (
