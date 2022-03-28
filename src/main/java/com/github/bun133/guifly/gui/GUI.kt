@@ -1,8 +1,10 @@
 package com.github.bun133.guifly.gui
 
 import com.github.bun133.guifly.gui.item.GUIItem
+import com.github.bun133.guifly.gui.type.IndexConverter
 import com.github.bun133.guifly.gui.type.InventoryType
 import net.kyori.adventure.text.Component
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -13,17 +15,33 @@ import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.plugin.java.JavaPlugin
 
-class GUI(
-    @Suppress("MemberVisibilityCanBePrivate") val type: InventoryType,
+open class GUI(
+    private val indexConverter: IndexConverter,
+    inventoryType: org.bukkit.event.inventory.InventoryType,
+    size: Int,
     title: Component,
     holder: InventoryHolder?,
     plugin: JavaPlugin
 ) : Listener {
+    constructor(type: InventoryType, title: Component, holder: InventoryHolder?, plugin: JavaPlugin) : this(
+        type.indexConverter,
+        type.type,
+        type.size,
+        title,
+        null,
+        plugin
+    )
+
     init {
         plugin.server.pluginManager.registerEvents(this, plugin)
     }
 
-    val gui = type.createInventory(holder, title)
+    val gui = if (inventoryType == org.bukkit.event.inventory.InventoryType.CHEST) {
+        Bukkit.createInventory(holder, size, title)
+    } else {
+        Bukkit.createInventory(holder, inventoryType, title)
+    }
+
     private val items = mutableMapOf<Pair<Int, Int>, GUIItem>()
 
     operator fun set(unit: Unit, item: GUIItem) {
@@ -35,7 +53,7 @@ class GUI(
      */
     fun set(vararg item: GUIItem) {
         item.forEach { e ->
-            type.indexConverter.get(e.x to e.y)?.let {
+            indexConverter.get(e.x to e.y)?.let {
                 gui.setItem(it, e.item)
                 items[e.x to e.y] = e
             }
@@ -53,7 +71,7 @@ class GUI(
     @EventHandler
     private fun onClick(e: InventoryClickEvent) {
         if (e.clickedInventory != gui) return
-        val entry = items.values.find { type.indexConverter.get(it.x to it.y) == e.rawSlot } ?: return
+        val entry = items.values.find { indexConverter.get(it.x to it.y) == e.rawSlot } ?: return
 
         // List click event
         val click = if (
@@ -128,7 +146,7 @@ class GUI(
 
     @EventHandler
     private fun onDrag(e: InventoryDragEvent) {
-        val entry = items.values.filter { e.rawSlots.contains(type.indexConverter.get(it.x to it.y)) }
+        val entry = items.values.filter { e.rawSlots.contains(indexConverter.get(it.x to it.y)) }
         if (entry.isEmpty()) return
 
         val change = entry.map { it.change }.flatten()

@@ -2,12 +2,11 @@ package com.github.bun133.guifly.gui
 
 import com.github.bun133.guifly.gui.item.GUIItem
 import com.github.bun133.guifly.gui.type.InventoryType
-import com.github.bun133.guifly.item
 import net.kyori.adventure.text.Component
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.plugin.java.JavaPlugin
 
-class GUIBuilder {
+open class GUIBuilder {
     internal fun build(plugin: JavaPlugin): GUI {
         if (title == null) {
             throw IllegalStateException("$this title is null,please check code and set title")
