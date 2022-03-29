@@ -67,7 +67,6 @@ open class GUI(
     }
 
     private fun getEntry(slot: Int): GUIItem? {
-        println("getEntry: $slot")
         return items.toList().filter { indexConverter.get(it.first) == slot }.map { it.second }.firstOrNull()
     }
 

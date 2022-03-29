@@ -62,11 +62,7 @@ class InfiniteGUI(
         item.forEach {
             internalMap[it.x to it.y] = it
 
-            if (infiniteIndex.forceRules.contains(it.x to it.y)) {
-                items[it.x to it.y] = it
-            } else {
-                items[it.x to it.y - infiniteIndex.y] = it
-            }
+            items[it.x to it.y] = it
 
             val index = infiniteIndex.get(it.x to it.y) ?: return@forEach
             gui.setItem(index, it.item)
