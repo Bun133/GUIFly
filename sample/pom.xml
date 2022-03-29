@@ -159,7 +159,7 @@
         <dependency>
             <groupId>com.github.Bun133</groupId>
             <artifactId>GUIFly</artifactId>
-            <version>0.1.0</version>
+            <version>2c558138e6</version>
         </dependency>
     </dependencies>
 </project>

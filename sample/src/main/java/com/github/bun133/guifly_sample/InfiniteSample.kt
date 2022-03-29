@@ -30,6 +30,12 @@ class InfiniteSample {
             markAsUnMovable()
         }
 
+        infinite.item(1 to 9) {
+            stack(ItemStack(Material.SAND))
+            click { e -> e.whoClicked.sendMessage("click At 1,9") }
+            markAsUnMovable()
+        }
+
         infinite.item(1 to 10) {
             stack(ItemStack(Material.GOLD_BLOCK))
             click { e -> e.whoClicked.sendMessage("click At 1,10") }
