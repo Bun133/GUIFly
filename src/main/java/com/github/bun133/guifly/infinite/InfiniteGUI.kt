@@ -19,6 +19,7 @@ class InfiniteGUI(
     title: Component,
     holder: InventoryHolder?,
     plugin: JavaPlugin,
+    notInsertable: Boolean,
     defaultIndexConverter: IndexConverter = getChestType(chestRow).indexConverter,
     private val infiniteIndex: InfiniteIndexConverter = InfiniteIndexConverter(defaultIndexConverter)
 ) :
@@ -28,7 +29,8 @@ class InfiniteGUI(
         getChestType(chestRow).size,
         title,
         holder,
-        plugin
+        plugin,
+        notInsertable
     ) {
     private val internalMap = mutableMapOf<Pair<Int, Int>, GUIItem>()
 
@@ -113,7 +115,13 @@ class InfiniteGUIBuilder() : GUIBuilder() {
         } else if (_type == null) {
             throw IllegalStateException("$this type is null,please check code and set type")
         } else {
-            return InfiniteGUI(toChestRow(_type!!), _title!!, _holder, plugin).also { it.set(*items.toTypedArray()) }
+            return InfiniteGUI(
+                toChestRow(_type!!),
+                _title!!,
+                _holder,
+                plugin,
+                _markedNotInsertable
+            ).also { it.set(*items.toTypedArray()) }
         }
     }
 

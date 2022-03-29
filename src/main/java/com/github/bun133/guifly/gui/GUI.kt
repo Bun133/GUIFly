@@ -22,15 +22,23 @@ open class GUI(
     size: Int,
     title: Component,
     holder: InventoryHolder?,
-    plugin: JavaPlugin
+    plugin: JavaPlugin,
+    val notInsertable: Boolean
 ) : Listener {
-    constructor(type: InventoryType, title: Component, holder: InventoryHolder?, plugin: JavaPlugin) : this(
+    constructor(
+        type: InventoryType,
+        title: Component,
+        holder: InventoryHolder?,
+        plugin: JavaPlugin,
+        notInsertable: Boolean = false
+    ) : this(
         type.indexConverter,
         type.type,
         type.size,
         title,
         null,
-        plugin
+        plugin,
+        notInsertable
     )
 
     val gui = if (inventoryType == org.bukkit.event.inventory.InventoryType.CHEST) {
@@ -70,8 +78,26 @@ open class GUI(
         return items.toList().filter { indexConverter.get(it.first) == slot }.map { it.second }.firstOrNull()
     }
 
+    private fun preventInsert(e: InventoryClickEvent) {
+        if (e.clickedInventory == gui) {
+            if (
+                e.action == InventoryAction.PLACE_ALL ||
+                e.action == InventoryAction.PLACE_SOME ||
+                e.action == InventoryAction.PLACE_ONE ||
+                e.action == InventoryAction.PLACE_ALL
+            ) {
+                e.isCancelled = true
+            }
+        } else if (e.view.topInventory == gui && e.clickedInventory == e.view.bottomInventory) {
+            if (e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                e.isCancelled = true
+            }
+        }
+    }
+
     /// EVENTS
     private fun onClick(e: InventoryClickEvent) {
+        if (notInsertable) preventInsert(e)
         if (e.clickedInventory != gui) return
         val entry = getEntry(e.slot) ?: return
 

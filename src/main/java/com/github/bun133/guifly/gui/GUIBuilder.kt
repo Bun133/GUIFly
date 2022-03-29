@@ -13,7 +13,7 @@ open class GUIBuilder {
         } else if (_type == null) {
             throw IllegalStateException("$this type is null,please check code and set type")
         } else {
-            return GUI(_type!!, _title!!, _holder, plugin).also { it.set(*items.toTypedArray()) }
+            return GUI(_type!!, _title!!, _holder, plugin,_markedNotInsertable).also { it.set(*items.toTypedArray()) }
         }
     }
 
@@ -35,5 +35,10 @@ open class GUIBuilder {
     protected var _holder: InventoryHolder? = null
     fun setHolder(holder: InventoryHolder) {
         this._holder = holder
+    }
+
+    protected var _markedNotInsertable = false
+    fun setMarkedNotInsertable() {
+        this._markedNotInsertable = true
     }
 }
