@@ -54,9 +54,25 @@ class InfiniteGUI(
             .build()
 
         infiniteIndex.forceRules[9 to chestRow] = 9 * chestRow - 1
+        val upPageButton = ItemBuilder(9, 2)
+            .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("上のページへ")) } })
+            .click { onUpPageClick() }
+            .markAsUnMovable()
+            .build()
+        infiniteIndex.forceRules[9 to 2] = 18 - 1
+
+        val downPageButton = ItemBuilder(9, chestRow - 1)
+            .stack(ItemStack(Material.ARROW).also { it.editMeta { i -> i.displayName(Component.text("下のページへ")) } })
+            .click { onDownPageClick() }
+            .markAsUnMovable()
+            .build()
+
+        infiniteIndex.forceRules[9 to chestRow - 1] = 9 * (chestRow - 1) - 1
 
         this[Unit] = upButton
         this[Unit] = downButton
+        this[Unit] = upPageButton
+        this[Unit] = downPageButton
     }
 
 
@@ -87,8 +103,18 @@ class InfiniteGUI(
         update()
     }
 
+    fun onUpPageClick() {
+        infiniteIndex.y = max(0, infiniteIndex.y - chestRow)
+        update()
+    }
+
     fun onDownClick() {
         infiniteIndex.y = min(maxY() - 1, infiniteIndex.y + 1)
+        update()
+    }
+
+    fun onDownPageClick() {
+        infiniteIndex.y = min(maxY() - 1, infiniteIndex.y + chestRow)
         update()
     }
 
