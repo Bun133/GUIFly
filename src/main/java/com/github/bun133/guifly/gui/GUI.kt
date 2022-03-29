@@ -66,11 +66,15 @@ open class GUI(
         p.openInventory(gui)
     }
 
+    private fun getEntry(slot: Int): GUIItem? {
+        println("getEntry: $slot")
+        return items.toList().filter { indexConverter.get(it.first) == slot }.map { it.second }.firstOrNull()
+    }
+
     /// EVENTS
     private fun onClick(e: InventoryClickEvent) {
         if (e.clickedInventory != gui) return
-        val en = items.toList().find { indexConverter.get(it.first) == e.rawSlot } ?: return
-        val entry = en.second
+        val entry = getEntry(e.slot) ?: return
 
         // List click event
         val click = if (
@@ -144,12 +148,13 @@ open class GUI(
     }
 
     private fun onDrag(e: InventoryDragEvent) {
-        val entry = items.values.filter { e.rawSlots.contains(indexConverter.get(it.x to it.y)) }
-        if (entry.isEmpty()) return
-
-        val change = entry.map { it.change }.flatten()
-
-        change.forEach { it(e) }
+        e.rawSlots.filter { it < e.view.topInventory.size }.mapNotNull { getEntry(it) }.forEach {
+            val change = it.change
+            change.forEach { it(e) }
+            if (it.isMarkUnMovable) {
+                e.isCancelled = true
+            }
+        }
     }
 }
 
