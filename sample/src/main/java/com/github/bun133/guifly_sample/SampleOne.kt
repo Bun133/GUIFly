@@ -21,6 +21,9 @@ class SampleOne {
             // GUIのタイプを指定(チェスト3段)
             type(InventoryType.CHEST_3)
 
+            // GUI内のアイテムを変更できないようにする(推奨)
+            setMarkedNotInsertable()
+
             // (1,1)(左上)のアイテムを指定
             item(1 to 1) {
                 // クリック時の処理
@@ -51,6 +54,9 @@ class SampleOne {
 
                     // アイテムの指定
                     stack(ItemStack(Material.STONE))
+
+                    // このアイテムに関してのイベントを全部キャンセルする(動かなくなる)
+                    markAsUnMovable()
                 }
 
                 // (2,2)を個別に指定する
@@ -58,6 +64,10 @@ class SampleOne {
                     // クリック時の処理
                     click {
                         (it.whoClicked as Player).sendMessage("Hi! I'm overwritten item!")
+                    }
+
+                    shiftClick {
+                        (it.whoClicked as Player).sendMessage("Shift click! at Overwritten Item")
                     }
 
                     // アイテムの指定
