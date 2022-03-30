@@ -103,9 +103,25 @@ open class GUI(
 
         // List click event
         val click = if (
-            e.action != InventoryAction.COLLECT_TO_CURSOR
+            e.action == InventoryAction.PICKUP_ALL ||
+            e.action == InventoryAction.PICKUP_HALF ||
+            e.action == InventoryAction.PICKUP_ONE ||
+            e.action == InventoryAction.PICKUP_SOME ||
+            e.action == InventoryAction.PLACE_ALL ||
+            e.action == InventoryAction.PLACE_SOME ||
+            e.action == InventoryAction.PLACE_ONE ||
+            e.action == InventoryAction.SWAP_WITH_CURSOR ||
+            e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY
         ) {
             entry.click.toList()
+        } else {
+            emptyList()
+        }
+
+        val shiftClick = if (
+            e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY
+        ) {
+            entry.shiftClick.toList()
         } else {
             emptyList()
         }
@@ -156,6 +172,9 @@ open class GUI(
 
         // Invoke click event
         click.forEach { it(e) }
+
+        // Invoke shift click event
+        shiftClick.forEach { it(e) }
 
         // Invoke pick event
         pick.forEach { it(e) }

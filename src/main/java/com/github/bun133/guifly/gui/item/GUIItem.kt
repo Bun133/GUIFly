@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack
 
 class GUIItem(val x: Int, val y: Int, val item: ItemStack) {
     internal var click = mutableListOf<(InventoryClickEvent) -> Unit>()
+    internal var shiftClick = mutableListOf<(InventoryClickEvent) -> Unit>()
     internal var pick = mutableListOf<(InventoryClickEvent) -> Unit>()
     internal var move = mutableListOf<(InventoryClickEvent) -> Unit>()
     internal var change = mutableListOf<(InventoryInteractEvent) -> Unit>()

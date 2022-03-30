@@ -14,6 +14,7 @@ class ItemBuilder(
         } else {
             val item = GUIItem(x, y, stack!!)
             item.click = click
+            item.shiftClick = shiftClick
             item.pick = pick
             item.move = move
             item.change = change
@@ -36,8 +37,14 @@ class ItemBuilder(
     }
 
     private val click = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun click(f: (InventoryClickEvent) -> Unit) : ItemBuilder{
+    fun click(f: (InventoryClickEvent) -> Unit): ItemBuilder {
         click.add(f)
+        return this
+    }
+
+    private val shiftClick = mutableListOf<(InventoryClickEvent) -> Unit>()
+    fun shiftClick(f: (InventoryClickEvent) -> Unit): ItemBuilder {
+        shiftClick.add(f)
         return this
     }
 
@@ -49,7 +56,7 @@ class ItemBuilder(
 
     private val move = mutableListOf<(InventoryClickEvent) -> Unit>()
 
-    fun move(f: (InventoryClickEvent) -> Unit) : ItemBuilder{
+    fun move(f: (InventoryClickEvent) -> Unit): ItemBuilder {
         move.add(f)
         return this
     }
@@ -59,7 +66,7 @@ class ItemBuilder(
     /**
      * @note イベントはInventoryClickedEventとInventoryDragEventのどちらかが呼ばれる
      */
-    fun change(f: (InventoryInteractEvent) -> Unit)  : ItemBuilder{
+    fun change(f: (InventoryInteractEvent) -> Unit): ItemBuilder {
         change.add(f)
         return this
     }
@@ -69,7 +76,7 @@ class ItemBuilder(
     /**
      * このスタックに関連するイベントをすべて無効化するかどうか
      */
-    fun markAsUnMovable(f: Boolean = true) : ItemBuilder{
+    fun markAsUnMovable(f: Boolean = true): ItemBuilder {
         unmovable = f
         return this
     }
