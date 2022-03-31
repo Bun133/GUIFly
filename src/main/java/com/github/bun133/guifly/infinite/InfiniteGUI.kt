@@ -32,8 +32,6 @@ class InfiniteGUI(
         plugin,
         notInsertable
     ) {
-    private val internalMap = mutableMapOf<Pair<Int, Int>, GUIItem>()
-
     init {
         initGUI()
     }
@@ -76,19 +74,8 @@ class InfiniteGUI(
     }
 
 
-    override fun set(vararg item: GUIItem) {
-        item.forEach {
-            internalMap[it.x to it.y] = it
-
-            items[it.x to it.y] = it
-
-            val index = infiniteIndex.get(it.x to it.y) ?: return@forEach
-            gui.setItem(index, it.item)
-        }
-    }
-
     fun update() {
-        val toUpdate = internalMap.filter {
+        val toUpdate = items.filter {
             val y = if (infiniteIndex.forceRules.contains(it.key)) it.key.second else it.key.second - infiniteIndex.y
             y in 1..chestRow
         }
@@ -119,7 +106,7 @@ class InfiniteGUI(
     }
 
     fun maxY(): Int {
-        return internalMap.maxOf { it.key.second }
+        return items.maxOf { it.key.second }
     }
 
 }
