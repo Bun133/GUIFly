@@ -5,7 +5,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryInteractEvent
 import org.bukkit.inventory.ItemStack
 
-class ItemBuilder(
+open class ItemBuilder(
     @Suppress("MemberVisibilityCanBePrivate") val x: Int,
     @Suppress("MemberVisibilityCanBePrivate") val y: Int,
 ) {
