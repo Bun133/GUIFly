@@ -3,6 +3,7 @@ package com.github.bun133.guifly.gui
 import com.github.bun133.guifly.gui.item.GUIItem
 import com.github.bun133.guifly.gui.type.IndexConverter
 import com.github.bun133.guifly.gui.type.InventoryType
+import com.github.bun133.guifly.value.Value
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -14,6 +15,7 @@ import org.bukkit.event.inventory.InventoryCreativeEvent
 import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 open class GUI(
@@ -50,6 +52,8 @@ open class GUI(
     val listener = GUIListener(gui, plugin, { onClick(it) }, { onDrag(it) })
 
     protected val items = mutableMapOf<Pair<Int, Int>, GUIItem>()
+    private val itemStackListeners =
+        mutableMapOf<GUIItem, Pair<Value<ItemStack>, Value<ItemStack>.(ItemStack) -> Unit>>()
 
     operator fun set(unit: Unit, item: GUIItem) {
         set(item)
@@ -61,7 +65,17 @@ open class GUI(
     open fun set(vararg item: GUIItem) {
         item.forEach { e ->
             indexConverter.get(e.x to e.y)?.let {
-                gui.setItem(it, e.item)
+                val before = getEntry(e.x to e.y)
+                if (before != null) {
+                    itemStackListeners[before]?.let { p ->
+                        p.first.unListen(p.second)
+                    }
+                    itemStackListeners.remove(before)
+                }
+                val f: Value<ItemStack>.(ItemStack) -> Unit = { _: ItemStack -> set(e);println("Value Invoke") }
+                e.item.listen(f)
+                itemStackListeners[e] = e.item to f
+                gui.setItem(it, e.item.value)
                 items[e.x to e.y] = e
             }
         }
@@ -76,6 +90,10 @@ open class GUI(
 
     private fun getEntry(slot: Int): GUIItem? {
         return items.toList().filter { indexConverter.get(it.first) == slot }.map { it.second }.firstOrNull()
+    }
+
+    private fun getEntry(pos: Pair<Int, Int>): GUIItem? {
+        return items[pos]
     }
 
     private fun preventInsert(e: InventoryClickEvent) {
@@ -171,19 +189,19 @@ open class GUI(
         }
 
         // Invoke click event
-        click.forEach { it(e) }
+        click.forEach { entry.it(e) }
 
         // Invoke shift click event
-        shiftClick.forEach { it(e) }
+        shiftClick.forEach { entry.it(e) }
 
         // Invoke pick event
-        pick.forEach { it(e) }
+        pick.forEach { entry.it(e) }
 
         // Invoke move event
-        move.forEach { it(e) }
+        move.forEach { entry.it(e) }
 
         // Invoke change event
-        change.forEach { it(e) }
+        change.forEach { entry.it(e) }
 
         // cancel event
         if (entry.isMarkUnMovable) {
@@ -194,7 +212,7 @@ open class GUI(
     private fun onDrag(e: InventoryDragEvent) {
         e.rawSlots.filter { it < e.view.topInventory.size }.mapNotNull { getEntry(it) }.forEach {
             val change = it.change
-            change.forEach { it(e) }
+            change.forEach { c -> it.c(e) }
             if (it.isMarkUnMovable) {
                 e.isCancelled = true
             }

@@ -1,5 +1,6 @@
 package com.github.bun133.guifly.gui.item
 
+import com.github.bun133.guifly.value.Value
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryInteractEvent
 import org.bukkit.inventory.ItemStack
@@ -12,7 +13,7 @@ class ItemBuilder(
         if (stack == null) {
             throw IllegalStateException("$this stack is null,please check code and set stack")
         } else {
-            val item = GUIItem(x, y, stack!!)
+            val item = GUIItem(x, y, Value(stack!!))
             item.click = click
             item.shiftClick = shiftClick
             item.pick = pick
@@ -36,37 +37,36 @@ class ItemBuilder(
         return this
     }
 
-    private val click = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun click(f: (InventoryClickEvent) -> Unit): ItemBuilder {
+    private val click = mutableListOf<GUIItem.(InventoryClickEvent) -> Unit>()
+    fun click(f: GUIItem.(InventoryClickEvent) -> Unit): ItemBuilder {
         click.add(f)
         return this
     }
 
-    private val shiftClick = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun shiftClick(f: (InventoryClickEvent) -> Unit): ItemBuilder {
+    private val shiftClick = mutableListOf<GUIItem.(InventoryClickEvent) -> Unit>()
+    fun shiftClick(f: GUIItem.(InventoryClickEvent) -> Unit): ItemBuilder {
         shiftClick.add(f)
         return this
     }
 
-    private val pick = mutableListOf<(InventoryClickEvent) -> Unit>()
-    fun pick(f: (InventoryClickEvent) -> Unit): ItemBuilder {
+    private val pick = mutableListOf<GUIItem.(InventoryClickEvent) -> Unit>()
+    fun pick(f: GUIItem.(InventoryClickEvent) -> Unit): ItemBuilder {
         pick.add(f)
         return this
     }
 
-    private val move = mutableListOf<(InventoryClickEvent) -> Unit>()
-
-    fun move(f: (InventoryClickEvent) -> Unit): ItemBuilder {
+    private val move = mutableListOf<GUIItem.(InventoryClickEvent) -> Unit>()
+    fun move(f: GUIItem.(InventoryClickEvent) -> Unit): ItemBuilder {
         move.add(f)
         return this
     }
 
-    private val change = mutableListOf<(InventoryInteractEvent) -> Unit>()
+    private val change = mutableListOf<GUIItem.(InventoryInteractEvent) -> Unit>()
 
     /**
      * @note イベントはInventoryClickedEventとInventoryDragEventのどちらかが呼ばれる
      */
-    fun change(f: (InventoryInteractEvent) -> Unit): ItemBuilder {
+    fun change(f: GUIItem.(InventoryInteractEvent) -> Unit): ItemBuilder {
         change.add(f)
         return this
     }
