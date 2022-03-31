@@ -9,7 +9,7 @@ open class ItemBuilder(
     @Suppress("MemberVisibilityCanBePrivate") val x: Int,
     @Suppress("MemberVisibilityCanBePrivate") val y: Int,
 ) {
-    internal fun build(): GUIItem {
+    fun build(): GUIItem {
         if (stack == null) {
             throw IllegalStateException("$this stack is null,please check code and set stack")
         } else {
