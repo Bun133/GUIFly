@@ -1,6 +1,7 @@
 package com.github.bun133.guifly_sample
 
 import com.github.bun133.guifly.gui
+import com.github.bun133.guifly.gui.GUI
 import com.github.bun133.guifly.gui.type.InventoryType
 import com.github.bun133.guifly.item
 import com.github.bun133.guifly.title
@@ -14,7 +15,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 class ValueSample {
-    fun open(plugin: JavaPlugin) {
+    fun main(plugin: JavaPlugin) : GUI {
         val booleanValue = Value<Boolean>(true)
 
         booleanValue.listen {
@@ -37,5 +38,7 @@ class ValueSample {
             addItem(booleanItem)
             addItem(enumItem)
         }
+
+        return gui
     }
 }

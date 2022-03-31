@@ -22,7 +22,7 @@ class GUISampleCommand : Command("sample") {
     init {
         description("Open sample GUI")
         usage {
-            selectionArgument("selection", "sampleOne", "Infinite")
+            selectionArgument("selection", "sampleOne", "Infinite","Value")
             executes {
                 when (typedArgs[0] as String) {
                     "sampleOne" -> {
@@ -36,6 +36,15 @@ class GUISampleCommand : Command("sample") {
                     }
                     "Infinite" -> {
                         val gui = InfiniteSample().main(plugin)
+                        if (this.player != null) {
+                            gui.open(this.player!!)
+                            success("Opened!")
+                        } else {
+                            fail("Player is null")
+                        }
+                    }
+                    "Value" -> {
+                        val gui = ValueSample().main(plugin)
                         if (this.player != null) {
                             gui.open(this.player!!)
                             success("Opened!")

@@ -72,7 +72,7 @@ open class GUI(
                     }
                     itemStackListeners.remove(before)
                 }
-                val f: Value<ItemStack>.(ItemStack) -> Unit = { _: ItemStack -> set(e);println("Value Invoke") }
+                val f: Value<ItemStack>.(ItemStack) -> Unit = { _: ItemStack -> set(e) }
                 e.item.listen(f)
                 itemStackListeners[e] = e.item to f
                 gui.setItem(it, e.item.value)
