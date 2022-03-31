@@ -28,7 +28,8 @@ class SampleOne {
             item(1 to 1) {
                 // クリック時の処理
                 click {
-                    (it.whoClicked as Player).sendMessage("click!")
+                    (it.whoClicked as Player).sendMessage("click!,change!")
+                    this.item.value = ItemStack(Material.values().random())
                 }
 
                 // アイテムを指定

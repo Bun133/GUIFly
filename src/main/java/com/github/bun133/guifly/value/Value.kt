@@ -3,8 +3,8 @@ package com.github.bun133.guifly.value
 open class Value<T>(defaultValue: T) {
     var value: T = defaultValue
         set(value) {
-            onChange(value)
             field = value
+            onChange(value)
         }
 
     private val listeners = mutableListOf<Value<T>.(T) -> Unit>()
