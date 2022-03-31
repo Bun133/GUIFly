@@ -20,5 +20,7 @@ class BooleanValueItemBuilder(
                 this.item.value = falseStack
             }
         }
+
+        stack(if (value.value) trueStack else falseStack)
     }
 }

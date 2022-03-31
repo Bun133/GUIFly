@@ -24,6 +24,19 @@ class EnumValueItemBuilder<T : Enum<T>>(x: Int, y: Int, val value: Value<T>, val
                 this.item.value = stackMap[next]!!
             }
         }
+
+        stack{
+            val i = stackMap[value.value]
+            if (i == null) {
+                ItemStack(Material.WHITE_WOOL).also {
+                    it.editMeta { m ->
+                        m.displayName(Component.text("エラー: 値が見つかりません"))
+                    }
+                }
+            } else {
+                i
+            }
+        }
     }
 
 }
