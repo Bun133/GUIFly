@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
-class EnumValueItemBuilder<T : Enum<T>>(x: Int, y: Int, val value: Value<T>, val stackMap: Map<T, ItemStack>) :
+class EnumValueItemBuilder<T : Enum<T>>(x: Int, y: Int, val value: Value<T>, var stackMap: Map<T, ItemStack>) :
     ItemBuilder(x, y) {
     init {
         click {
@@ -25,7 +25,7 @@ class EnumValueItemBuilder<T : Enum<T>>(x: Int, y: Int, val value: Value<T>, val
             }
         }
 
-        stack{
+        stack {
             val i = stackMap[value.value]
             if (i == null) {
                 ItemStack(Material.WHITE_WOOL).also {
